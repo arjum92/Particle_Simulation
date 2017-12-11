@@ -1,0 +1,85 @@
+%!TEX program = xelatex
+\documentclass[10pt, compress]{beamer}
+\usetheme[titleprogressbar]{m}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{minted}
+\usepackage{float}
+\usepackage{pdfpages}
+
+
+\setbeamercolor{background canvas}{bg=}
+
+\usepgfplotslibrary{dateplot}
+
+\usemintedstyle{trac}
+
+\title{A Python package for non-bonded interactions in periodic systems}
+%\subtitle{}
+%\author{Group 1}
+\institute{FU Berlin}
+
+\begin{document}
+
+\maketitle
+
+
+
+\begin{frame}[fragile]
+	\frametitle{UML Diagram}
+    \includepdf[pages = 1, scale = 1, offset = -2.5 -10]{CompSci-2017_Project.pdf}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Coding Guideline}
+	\begin{figure}
+    	\begin{itemize}
+    		\item Classes: Pascal Case
+            \item Variables: lower case/separated by underscore, leading underscore for private variables
+            \item Methods: lower case/separated by underscore, meaningful names (aka what is the function doing)
+            \item Comments: only when necessary, lower case (KISS)
+            \item separate all operators with spaces (e.g.: $1 + 2 = 3$)
+            \item function calls directly followed by parentheses (e.g. $func(param)$)
+            \item avoid very long code lines (> 80 characters), break line instead at an appropriate position
+    	\end{itemize}
+        \ \\
+        This covers only the most important rules to follow. Please refer to 
+        \url{https://www.python.org/dev/peps/pep-0008/} \\
+        for detailed information.
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Project Schedule}
+	\begin{figure}
+    	\begin{enumerate}
+    		\item Complete UML Diagram and understand the purpose of the software and how we can realize it.
+            \item Set up the GitHub repository and create the basic structure of the project. (directories, files)
+            \item Implement classes: Particle, System, Simulation, Parameters
+            \item Implement neighborlist.
+            \item Implement Ewald-Summation.
+            \item Implement Lennard-Jones.
+            \item Implement Metropolis Monte-Carlo.
+            \item Implement $optimize$ function.
+            \item Implement $simulate$ function
+    	\end{enumerate}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Open Questions}
+	\begin{figure}
+    	\begin{itemize}
+    		\item How to generate trial positions?
+            \item What kind of neighborlist?
+            \item Multiple neighborlists?
+            \item How to factor in Lennard-Jones-Potential?
+            \item Multi-species Lennard-Jones?
+    	\end{itemize}
+	\end{figure}
+\end{frame}
+
+%\plain{Questions?}
+
+\end{document}
