@@ -7,7 +7,8 @@ Software introduction: https://www.overleaf.com/read/wwqxvhrfwrmj
 # Installation
 First clone the package with:
 ```
-$ git clone https://github.com/Marsll/md-simulator
+$ git clone https://github.com/BioFreak95/Particle_Simulation
+
 ```
 Then install the package with:
 ```
