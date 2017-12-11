@@ -9,12 +9,12 @@
 * Implement Lennard-Jones.
   * 22.12.2017
 * Implement Ewald-Summation.
-  * 07.01.2017
+  * 07.01.2018
 * Implement Metropolis Monte-Carlo.
-  * 12.01.2017
+  * 12.01.2018
 * Implement *optimize*-function.
-  * 19.01.2017
+  * 19.01.2018
 * Implement *simulate*-function.
-  * 19.01.2017
+  * 19.01.2018
 * Final Moves and Presentation
-  * 28.01.2017
+  * 28.01.2018
