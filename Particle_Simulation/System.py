@@ -1,4 +1,5 @@
 import numpy as np
+import Particle_Simulation.Errors as Er
 
 '''
 Boundary Conditions!!
@@ -14,6 +15,7 @@ class System:
         self.rc = rc
         self.cellnumber = np.ones(3)
         self.cellspace = np.ones(3)
+        self.dim = len(self.particles[0])
 
     def update_neighborlist(self):
         raise NotImplementedError()
@@ -28,6 +30,8 @@ class System:
             self.mc = np.zeros(3)
 
         for i in range(self.particlenumber):
+            if(self.dim != len(self.particles[i])):
+                raise Er.InputError('Different Dimensions in Particles are not allowed!')
             for a in range(len(self.particles[i])):
                 self.mc[a] = np.floor(self.runden(self.particles[i][a] / self.cellspace[a]))
             index = int(
