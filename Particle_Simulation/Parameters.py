@@ -11,3 +11,5 @@ class Parameters:
         self.es_sigma = es_sigma
         self.lj_sigma = lj_sigma
         self.lj_epsilon = lj_epsilon
+
+
