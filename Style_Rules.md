@@ -5,7 +5,7 @@
 * Methods: lower case/separated by underscore, meaningful names (aka what is the function doing)
 * Comments: only when necessary, lower case (KISS) <br>
   * no comments inside a function, unless the code is special and hard to understand<br>
-  * short functions: short explaination comment<br>
+  * short functions: short explanation comment<br>
   * big functions: Docstring (https://www.python.org/dev/peps/pep-0257/)
 * separate all operators with spaces (e.g.: $1 + 2 = 3$)
 * function calls directly followed by parentheses (e.g. $func(param)$)

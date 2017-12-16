@@ -21,4 +21,3 @@ class EwaldSummation:
             selfinteraction_energy += system.particles[i].charge ** 2
 
         return prefactor * selfinteraction_energy
-
