@@ -6,18 +6,7 @@ from Particle_Simulation.System import System
 Pls write true test-classes
 '''
 
-
 class test_System(unittest.TestCase):
-    def test_2dTrue(self):
-        particles = np.array([[1], [0], [3], [4], [0]])
-        Box = np.array([4])
-        rc = 2
-        s1 = System(particles, Box, rc)
-        s1.construct_neighborlist()
-        Head = [0, 0]
-        List = [0, 0]
-
-        self.assertEqual(s1.head, Head)
 
     def test_1d(self):
         print(np.floor(3.6 / 4))
@@ -38,7 +27,6 @@ class test_System(unittest.TestCase):
         s1.construct_neighborlist()
         print(s1.head)
         print(s1.list)
-        # self.assertEqual(s1.list, reference_nl_list)
 
     def test_3d(self):
         print(np.floor(3.6 / 4))

@@ -9,12 +9,15 @@ Can we use it this way?
 
 class System:
     def __init__(self, particles, Box, rc):
+
         self.particles = particles
-        self.particlenumber = len(particles)
         self.Box = Box
         self.rc = rc
+
+        self.particlenumber = len(particles)
         self.cellnumber = np.ones(3)
         self.cellspace = np.ones(3)
+
         self.dim = len(self.particles[0])
 
     def update_neighborlist(self):
@@ -24,18 +27,22 @@ class System:
         for i in range(len(self.Box)):
             self.cellnumber[i] = np.floor(self.Box[i] / self.rc)
             self.cellspace[i] = self.Box[i] / self.cellnumber[i]
+
             self.totalcellnumber = int(np.prod(self.cellnumber))
             self.head = np.zeros(self.totalcellnumber) - 1
             self.list = np.zeros(self.particlenumber) - 1
-            self.mc = np.zeros(3)
+
+            mc = np.zeros(3)
 
         for i in range(self.particlenumber):
             if(self.dim != len(self.particles[i])):
                 raise Er.InputError('Different Dimensions in Particles are not allowed!')
+
             for a in range(len(self.particles[i])):
-                self.mc[a] = np.floor(self.runden(self.particles[i][a] / self.cellspace[a]))
-            index = int(
-                self.mc[2] + self.mc[1] * self.cellnumber[2] + self.mc[0] * self.cellnumber[2] * self.cellnumber[1])
+                mc[a] = np.floor(self.runden(self.particles[i][a] / self.cellspace[a]))
+
+            index = int(mc[2] + mc[1] * self.cellnumber[2] + mc[0] * self.cellnumber[2] * self.cellnumber[1])
+
             self.list[i] = self.head[index]
             self.head[index] = i
 
