@@ -4,7 +4,6 @@ import Particle_Simulation.Errors as Er
 '''
 Boundary Conditions!!
 Can we use it this way?
-rounding-function is not correct. Check borderline cases!!!!
 '''
 
 
