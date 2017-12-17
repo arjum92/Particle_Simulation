@@ -9,31 +9,37 @@ Pls write true test-classes
 class test_System(unittest.TestCase):
 
     def test_1d(self):
-        print(np.floor(3.6 / 4))
-        particles = np.array([[1], [0], [3], [4], [0]])
-        Box = np.array([4])
-        rc = 2
-        s1 = System(particles, Box, rc)
+        particle_positions = np.array([[1], [0], [3], [4], [0]])
+        box_space = np.array([4])
+        cutoff = 2
+        s1 = System(particle_positions, box_space, cutoff)
         s1.construct_neighborlist()
-        print(s1.head)
-        print(s1.list)
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
 
     def test_2d(self):
-        print(np.floor(3.6 / 4))
-        particles = np.array([[1, 1], [0, 3], [3, 4], [4, 4], [0, 0]])
-        Box = np.array([4, 4])
-        rc = 2
-        s1 = System(particles, Box, rc)
+        particle_positions = np.array([[1, 1], [0, 3], [3, 4], [4, 4], [0, 0]])
+        box_space = np.array([4, 4])
+        cutoff = 2
+        s1 = System(particle_positions, box_space, cutoff)
         s1.construct_neighborlist()
-        print(s1.head)
-        print(s1.list)
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
+
+    def test_2dsecond(self):
+        particle_positions = np.array([[1, 1], [0, 3], [3, 4], [4, 4], [0, 0], [10, 0]])
+        box_space = np.array([10, 10])
+        cutoff = 2.5
+        s1 = System(particle_positions, box_space, cutoff)
+        s1.construct_neighborlist()
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
 
     def test_3d(self):
-        print(np.floor(3.6 / 4))
-        particles = np.array([[1, 1, 3], [0, 3, 1], [3, 4, 2], [4, 4, 4], [0, 0, 0]])
-        Box = np.array([4, 4, 4])
-        rc = 2
-        s1 = System(particles, Box, rc)
+        particle_positions = np.array([[1, 1, 3], [0, 3, 1], [3, 4, 2], [4, 4, 4], [0, 0, 0]])
+        box_space = np.array([4, 4, 4])
+        cutoff = 2
+        s1 = System(particle_positions, box_space, cutoff)
         s1.construct_neighborlist()
-        print(s1.head)
-        print(s1.list)
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
