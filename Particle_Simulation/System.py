@@ -24,6 +24,7 @@ class System:
         raise NotImplementedError()
 
     def construct_neighborlist(self):
+
         for i in range(len(self.Box)):
             self.cellnumber[i] = np.floor(self.Box[i] / self.rc)
             self.cellspace[i] = self.Box[i] / self.cellnumber[i]
@@ -32,16 +33,17 @@ class System:
             self.head = np.zeros(self.totalcellnumber) - 1
             self.list = np.zeros(self.particlenumber) - 1
 
-            mc = np.zeros(3)
+            particle_cell_location = np.zeros(3)
 
         for i in range(self.particlenumber):
+
             if(self.dim != len(self.particles[i])):
                 raise Er.InputError('Different Dimensions in Particles are not allowed!')
 
             for a in range(len(self.particles[i])):
-                mc[a] = np.floor(self.runden(self.particles[i][a] / self.cellspace[a]))
+                particle_cell_location[a] = np.floor(self.runden(self.particles[i][a] / self.cellspace[a]))
 
-            index = int(mc[2] + mc[1] * self.cellnumber[2] + mc[0] * self.cellnumber[2] * self.cellnumber[1])
+            index = int(particle_cell_location[2] + particle_cell_location[1] * self.cellnumber[2] + particle_cell_location[0] * self.cellnumber[2] * self.cellnumber[1])
 
             self.list[i] = self.head[index]
             self.head[index] = i
