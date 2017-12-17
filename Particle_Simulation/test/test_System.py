@@ -27,9 +27,9 @@ class test_System(unittest.TestCase):
         print(s1.particle_neighbour_list)
 
     def test_2dsecond(self):
-        particle_positions = np.array([[1, 1], [0, 3], [3, 4], [4, 4], [0, 0], [10, 0]])
+        particle_positions = np.array([[1, 1], [0, 3], [3, 4], [5, 5], [10, 10], [10, 0]])
         box_space = np.array([10, 10])
-        cutoff = 2.5
+        cutoff = 4.6
         s1 = System(particle_positions, box_space, cutoff)
         s1.construct_neighborlist()
         print(s1.cell_list)

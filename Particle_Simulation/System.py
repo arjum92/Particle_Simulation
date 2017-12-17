@@ -41,7 +41,8 @@ class System:
                 raise Er.InputError('Different Dimensions in Particles are not allowed!')
 
             for a in range(len(self.particle_positions[i])):
-                particle_cell_location[a] = np.floor(self.boundary_rounding(self.particle_positions[i][a] / self.cell_space[a], a))
+                particle_cell_location[a] = np.floor(self.boundary_rounding(self.particle_positions[i][a] /
+                                                                            self.cell_space[a]))
 
             cell_index = int(particle_cell_location[2] + particle_cell_location[1] * self.cell_number[2] +
                         particle_cell_location[0] * self.cell_number[2] * self.cell_number[1])
@@ -49,9 +50,9 @@ class System:
             self.particle_neighbour_list[i] = self.cell_list[cell_index]
             self.cell_list[cell_index] = i
 
-    def boundary_rounding(self, x, a):
-        if x > 0 and x % self.cell_number[a] == 0:
-            x = x - 0.1*self.cell_number[a]
+    def boundary_rounding(self, x):
+        if x > 0 and x % 1 == 0:
+            x = x - 0.1
         return x
 
     '''
