@@ -4,6 +4,7 @@ import Particle_Simulation.Errors as Er
 '''
 Boundary Conditions!!
 Can we use it this way?
+#maybe periodic box ...?
 '''
 
 
