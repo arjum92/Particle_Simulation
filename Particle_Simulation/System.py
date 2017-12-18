@@ -42,8 +42,7 @@ class System:
             for a in range(len(self.particle_positions[i])):
                 if self.particle_positions[i][a] >= self.box_space[a]:
                     self.particle_positions[i][a] -= self.box_space[a]
-                particle_cell_location[a] = np.floor(self.particle_positions[i][a] /
-                                                                            self.cell_space[a])
+                particle_cell_location[a] = np.floor(self.particle_positions[i][a] / self.cell_space[a])
 
             cell_index = int(particle_cell_location[2] + particle_cell_location[1] * self.cell_number[2] +
                         particle_cell_location[0] * self.cell_number[2] * self.cell_number[1])
