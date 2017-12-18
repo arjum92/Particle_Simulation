@@ -53,3 +53,6 @@ class test_System(unittest.TestCase):
         s1.construct_neighborlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
+    def test(self):
+        array=[4,4]
+        print(array[1:3])
