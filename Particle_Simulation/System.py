@@ -2,7 +2,6 @@ import numpy as np
 import Particle_Simulation.Errors as Er
 
 '''
-Boundary Conditions!!
 Can we use it this way?
 '''
 
@@ -16,13 +15,13 @@ class System:
 
         self.particle_number = len(particles)
         self.cell_number = np.ones(3)
-        self.cell_space = np.ones(3)
+        self.cell_space = np.zeros(3)
 
         self.dim = len(self.particle_positions[0])
 
         for i in range(len(self.box_space)):
             self.cell_number[i] = np.floor(self.box_space[i] / self.cutoff)
-            self.cell_space[i] = self.box_space[i] / self.cell_number[i]
+            self.cell_space[i] = (self.box_space[i] / self.cell_number[i])
 
         self.total_cell_number = int(np.prod(self.cell_number))
         self.cell_list = np.zeros(self.total_cell_number) - 1
@@ -41,19 +40,16 @@ class System:
                 raise Er.InputError('Different Dimensions in Particles are not allowed!')
 
             for a in range(len(self.particle_positions[i])):
-                particle_cell_location[a] = np.floor(self.boundary_rounding(self.particle_positions[i][a] /
-                                                                            self.cell_space[a]))
+                if self.particle_positions[i][a] >= self.box_space[a]:
+                    self.particle_positions[i][a] -= self.box_space[a]
+                particle_cell_location[a] = np.floor(self.particle_positions[i][a] /
+                                                                            self.cell_space[a])
 
             cell_index = int(particle_cell_location[2] + particle_cell_location[1] * self.cell_number[2] +
                         particle_cell_location[0] * self.cell_number[2] * self.cell_number[1])
 
             self.particle_neighbour_list[i] = self.cell_list[cell_index]
             self.cell_list[cell_index] = i
-
-    def boundary_rounding(self, x):
-        if x > 0 and x % 1 == 0:
-            x = x - 0.1
-        return x
 
     '''
     def construct_3dneighborlist(self):
