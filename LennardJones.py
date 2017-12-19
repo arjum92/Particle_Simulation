@@ -2,6 +2,10 @@ import numpy as np
 
 class LennardJones:
 
+    '''
+    TODO: Writing the LennardJones.Energy.Calculating
+    '''
+    
     @staticmethod
     def calculate_lennardjones_energy(system, parameters):
         raise NotImplementedError
