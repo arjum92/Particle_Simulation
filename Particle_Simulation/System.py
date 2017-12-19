@@ -2,6 +2,11 @@ import numpy as np
 import Particle_Simulation.Errors as Er
 
 
+'''
+    TODO: Code-Sytle Update
+          Delete Old Functions as v1.0
+'''
+
 class System:
     def __init__(self, particles, Box, rc):
 
