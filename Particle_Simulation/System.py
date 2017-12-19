@@ -4,6 +4,7 @@ import Particle_Simulation.Errors as Er
 
 '''
     TODO: Code-Sytle Update
+          Create a 'Neighbourlist' for the cells!
           Delete Old Functions as v1.0
 '''
 
