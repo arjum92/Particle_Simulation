@@ -42,6 +42,9 @@ class System:
             for a in range(len(self.particle_positions[i])):
                 if self.particle_positions[i][a] >= self.box_space[a]:
                     self.particle_positions[i][a] -= self.box_space[a]
+                if self.particle_positions[i][a] < self.box_space[a]:
+                    self.particle_positions[i][a] += self.box_space[a]
+                #maybe use np.divide -> or decorator
                 particle_cell_location.append(np.floor(self.particle_positions[i][a] / self.cell_space[a]))
 
             cell_index = self.calculate_index(particle_cell_location)
