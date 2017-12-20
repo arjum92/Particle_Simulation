@@ -4,6 +4,6 @@
 
 ### Actual Behavior ###
 
-# Additional Part for Developers #
+#### Additional Part for Developers #
 
-## Steps for reproducing the expected behavior
+##### Steps for reproducing the expected behavior
