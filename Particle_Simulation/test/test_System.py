@@ -57,69 +57,27 @@ class test_System(unittest.TestCase):
         array=[4,4]
         print(array[1:3])
     
-    #Basic imput values validations
-    def test_null_value(self):
-        #particle_position_dimension_diff_with_box
-        particle_positions = np.array( [[ 0.0, 0.5], [1.5, 4.5], [2.5, 2.5], 
-                                       [3.0, 4.5], [4.5, 5.5], [5.5, 3.5],
-                                       [6.0, 5.0], [6.5, 9.5], [7.0, 1.1], 
-                                       [8.25, 2.0], [9.75,11.0], [] ] )
-        box_space = np.array([10.5 , 11.0])
-        cutoff = 4.6
+    #jit is only better, if we have 100.000 particles
+    def test_Bench(self):
+        particle_positions = []
+        for i in range(0,100000):
+            xtest = np.random.rand(2)
+            particle_positions.append(xtest)
+        particle_positions = np.array(particle_positions)
+        box_space = np.array([1,1])
+        cutoff = 0.1
         s1 = System(particle_positions, box_space, cutoff)
         s1.construct_neighborlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
-        
-    
-    def test_string_value(self):
-        #particle_position_dimension_diff_with_box
-        particle_positions = np.array( [[ 0.0, 0.5], [1.5, 4.5], [2.5, 2.5], 
-                                       [3.0, 4.5], [4.5, 5.5], [5.5, 3.5],
-                                       [6.0, 5.0], [6.5, 9.5], [7.0, 1.1], 
-                                       [8.25, 2.0], [9.75,11.0], ['h','m'] ] )
-        box_space = np.array([10.5 , 11.0])
-        cutoff = 4.6
-        s1 = System(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
-        print(s1.cell_list)
-        print(s1.particle_neighbour_list)
-        
-    def test_negative_value(self):
-        #particle_position_dimension_diff_with_box
-        particle_positions = np.array( [[ -1.0, -0.5], [1.5, 4.5], [2.5, 2.5], 
-                                       [3.0, 4.5], [4.5, 5.5], [5.5, 3.5],
-                                       [6.0, 5.0], [6.5, 9.5], [7.0, 1.1], 
-                                       [8.25, 2.0], [9.75,11.0] ] )
-        box_space = np.array([10.5 , 11.0])
-        cutoff = 4.6
-        s1 = System(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
-        print(s1.cell_list)
-        print(s1.particle_neighbour_list)
-        print('Output is coming for negative inputs')
-        
-        
-    def test_dimension_mismatch(self):
-        #particle_position_dimension_diff_with_box
-        particle_positions = np.array([[0.0, 0.5], [1.5, 4.5], [2.5, 2.5], 
-                                       [3.0, 4.5], [4.5, 5.5], [5.5, 3.5],
-                                       [6.0, 5.0], [6.5, 9.5], [7.0, 1.1], 
-                                       [8.25, 2.0], [9.75,11.0], [10.0 ,8.0 ] ])
-        box_space = np.array([10.5 , 11.0, 2.0])
-        npt.assert_equal(len(particle_positions[0]), len(box_space), 'Fail: dimension of box and particle positions not equal')
-        cutoff = 3.5
-        s1 = System(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
-        
-        
-    def test_1d_output_validation(self):
-        particle_positions = np.array([[0.0], [1.5], [2.5], 
+            
+    def test_1d_output_validation_1(self):
+        particle_positions = np.array([ [1.5], [2.5], 
                                        [3.0], [4.5] , [5.5],
                                        [6.0], [6.5], [7.0], 
                                        [8.25], [9.75], [10.0] ])
-        reference_head = np.asarray([3.0, 7.0, 11.0])
-        reference_neighlist = np.asarray([-1., 0., 1., 2., -1., 4., 5., 6., -1., 8., 9., 10.])
+        reference_head = np.asarray([10.0, 6.0, 9.0])
+        reference_neighlist = np.asarray([-1.0 , 0.0 , 1.0, -1.0 , 3.0 , 4.0 , 5.0, -1.0,  7.0,  8.0 , 2.0])
         box_space = np.array([10])
         cutoff = 3
         s1 = System(particle_positions, box_space, cutoff)
@@ -128,6 +86,40 @@ class test_System(unittest.TestCase):
         print(s1.particle_neighbour_list)
         npt.assert_equal(reference_head, s1.cell_list ,'Failed',verbose=True )
         npt.assert_equal(reference_neighlist, s1.particle_neighbour_list ,'Failed',verbose=True )
+        
+    def test_1d_output_validation_2(self):
+        particle_positions = np.array([ [1.5], [2.5], 
+                                       [3.0], [4.5] , [5.5],
+                                       [6.0], [6.5], [7.0], 
+                                       [8.25], [9.75], [10.0],[11.5],[12.5] ])
+        reference_head = np.asarray([12.0, 6.0, 9.0])
+        reference_neighlist = np.asarray([-1.0 , 0.0 , 1.0, -1.0 , 3.0 , 4.0 , 5.0, -1.0,  7.0,  8.0 , 2.0, 10.0 ,11.0])
+        box_space = np.array([10])
+        cutoff = 3
+        s1 = System(particle_positions, box_space, cutoff)
+        s1.construct_neighborlist()
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
+        npt.assert_equal(reference_head, s1.cell_list ,'Failed',verbose=True )
+        npt.assert_equal(reference_neighlist, s1.particle_neighbour_list ,'Failed',verbose=True )
+        
+    def test_1d_output_validation_3(self):
+        particle_positions = np.array([ [-1.75], [-0.25], [1.5], [2.5], 
+                                       [3.0], [4.5] , [5.5],
+                                       [6.0], [6.5], [7.0], 
+                                       [8.25], [9.75], [10.0],[11.5],[12.5] ])
+        reference_head = np.asarray([14.0, 8.0, 11.0])
+        reference_neighlist = np.asarray([-1.0 , 0.0 , -1.0, 2.0 , 3.0 , -1.0, 5.0,  6.0,  7.0 , 1.0, 9.0, 10.0, 4.0 ,12.0, 13.0])
+        box_space = np.array([10])
+        cutoff = 3
+        s1 = System(particle_positions, box_space, cutoff)
+        s1.construct_neighborlist()
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
+        npt.assert_equal(reference_head, s1.cell_list ,'Failed',verbose=True )
+        npt.assert_equal(reference_neighlist, s1.particle_neighbour_list ,'Failed',verbose=True )
+     
+    
         
         
     ''' Yet to implement
