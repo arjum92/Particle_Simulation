@@ -45,7 +45,7 @@ class test_System(unittest.TestCase):
         print(s1.particle_neighbour_list)
 
     def test_3dsecond(self):
-        particle_positions = np.array([[9, 6, 4], [2.25, 2, 2], [2.3, 4, 1], [4, 4, 2], [0, 0, 0]])
+        particle_positions = np.array([[9, 6, 4], [2.25, 2, 2], [2.3, 4, 1], [9, 4, 2], [0, 0, 0]])
         box_space = np.array([9, 6, 4])
         cutoff = 2
         s1 = System(particle_positions, box_space, cutoff)
@@ -62,6 +62,15 @@ class test_System(unittest.TestCase):
         particle_positions = np.array(particle_positions)
         box_space = np.array([1,1])
         cutoff = 0.1
+        s1 = System(particle_positions, box_space, cutoff)
+        s1.construct_neighborlist()
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
+
+    def test_periodicity(self):
+        particle_positions = np.array([[19,-18]])
+        box_space = np.array([2,2])
+        cutoff = 1
         s1 = System(particle_positions, box_space, cutoff)
         s1.construct_neighborlist()
         print(s1.cell_list)

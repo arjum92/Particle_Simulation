@@ -16,7 +16,7 @@ specs = [
     ('particle_neighbour_list', float64[:]),
 ]
 
-@jitclass(specs)
+#@jitclass(specs)
 class System:
     def __init__(self, particles, Box, rc):
 
@@ -49,8 +49,10 @@ class System:
 
             particle_cell_location = []
             for a in range(len(self.particle_positions[i])):
-                if self.particle_positions[i][a] >= self.box_space[a]:
+                while self.particle_positions[i][a] >= self.box_space[a]:
                     self.particle_positions[i][a] -= self.box_space[a]
+                while self.particle_positions[i][a] < 0:
+                    self.particle_positions[i][a] += self.box_space[a]
                 particle_cell_location.append(np.floor(self.particle_positions[i][a] / self.cell_space[a]))
 
             cell_index = self.calculate_index(particle_cell_location)
