@@ -1,27 +1,42 @@
 import numpy as np
 import Particle_Simulation.Errors as Er
+from numba import jitclass
+from numba import float64, int64, double
 
+specs = [
+    ('particle_positions', float64[:,:]),
+    ('box_space', float64[:]),
+    ('cutoff', float64),
+    ('particle_number', int64),
+    ('dim', int64),
+    ('cell_number', float64[:]),
+    ('cell_space', float64[:]),
+    ('total_cell_number', int64),
+    ('cell_list', float64[:]),
+    ('particle_neighbour_list', float64[:]),
+]
 
+@jitclass(specs)
 class System:
     def __init__(self, particles, Box, rc):
 
-        self.particle_positions = particles
-        self.box_space = Box
+        self.particle_positions = particles.astype(np.float64)
+        self.box_space = Box.astype(np.float64)
         self.cutoff = rc
 
         self.particle_number = len(particles)
 
-        self.cell_number = []
-        self.cell_space = []
         self.dim = len(self.particle_positions[0])
+        self.cell_number = np.zeros(self.dim)
+        self.cell_space = np.zeros(self.dim)
 
         for i in range(len(self.box_space)):
-            self.cell_number.append(np.floor(self.box_space[i] / self.cutoff))
-            self.cell_space.append((self.box_space[i] / self.cell_number[i]))
+            self.cell_number[i]=(np.floor(self.box_space[i] / self.cutoff))
+            self.cell_space[i]=((self.box_space[i] / self.cell_number[i]))
 
         self.total_cell_number = int(np.prod(self.cell_number))
         self.cell_list = np.zeros(self.total_cell_number) - 1
-        self.particle_neighbour_list = np.zeros(self.particle_number) - 1
+        self.particle_neighbour_list = np.zeros(self.particle_number) -1
 
     def update_neighbourlist(self):
         raise NotImplementedError()

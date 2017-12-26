@@ -1,5 +1,4 @@
 import numpy as np
-import numpy.testing as npt
 import unittest
 from Particle_Simulation.System import System
 
@@ -33,8 +32,8 @@ class test_System(unittest.TestCase):
         cutoff = 0.025
         s1 = System(particle_positions, box_space, cutoff)
         s1.construct_neighborlist()
-        print(s1.cell_list)
         print(s1.particle_neighbour_list)
+        print(s1.cell_list)
 
     def test_3d(self):
         particle_positions = np.array([[1, 1, 3], [0, 3, 1], [3, 4, 2], [4, 4, 4], [0, 0, 0]])
@@ -53,6 +52,17 @@ class test_System(unittest.TestCase):
         s1.construct_neighborlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
-    def test(self):
-        array=[4,4]
-        print(array[1:3])
+
+    #jit is only better, if we have 100.000 particles
+    def test_Bench(self):
+        particle_positions = []
+        for i in range(0,100000):
+            xtest = np.random.rand(2)
+            particle_positions.append(xtest)
+        particle_positions = np.array(particle_positions)
+        box_space = np.array([1,1])
+        cutoff = 0.1
+        s1 = System(particle_positions, box_space, cutoff)
+        s1.construct_neighborlist()
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
