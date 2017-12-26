@@ -5,6 +5,7 @@ class MetropolisMonteCarlo:
 
     BOLTZMANN_CONSTANT = 1
 
+
     @staticmethod
     def generate_trial_configuration(system, update_radius):
 
@@ -14,10 +15,10 @@ class MetropolisMonteCarlo:
             if np.random.rand(1)[0] <= update_probability:
                 system.particles[i].position = MetropolisMonteCarlo._generate_trial_position(system.particles[i].position,
                                                                                              update_radius)
-
         return system
 
     @staticmethod
+
     def evaluate_trial_configuration_greedy(system, trial_system):
         raise NotImplementedError
 
@@ -42,6 +43,7 @@ class MetropolisMonteCarlo:
                 return trial_system
             else:
                 return system
+
 
     @staticmethod
     def _generate_trial_position(position, update_radius):
