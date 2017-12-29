@@ -1,8 +1,7 @@
 sudo: false
 language: python
 python:
-  - "2.7"
-  - "3.4"
+  - "3.7"
 cache: apt
 addons:
   apt:
@@ -17,7 +16,7 @@ before_install:
   - export PATH="$HOME/miniconda/bin:$PATH"
   - conda update --yes conda
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION pip numpy scipy nose numba
+  - conda install --yes python=$TRAVIS_PYTHON_VERSION pip numpy numba
   - pip install pep8 python-coveralls
   - pip install .
 script:
