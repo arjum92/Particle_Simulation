@@ -45,8 +45,6 @@ class Neighbourlist:
     def construct_neighborlist(self):
 
         for i in range(self.particle_number):
-            if (self.dim != len(self.particle_positions[i])):
-                raise Er.InputError('Different Dimensions in Particles are not allowed!')
 
             particle_cell_location = []
             for a in range(len(self.particle_positions[i])):

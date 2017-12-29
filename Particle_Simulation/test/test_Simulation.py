@@ -1,13 +1,13 @@
 import numpy as np
 import numpy.testing as npt
 import unittest
-from Particle import Particle
-from Parameters import Parameters
-from LennardJones import LennardJones
+from Particle_Simulation.Particle import Particle
+from Particle_Simulation.Parameters import Parameters
+from Particle_Simulation.LennardJones import LennardJones
 
 
 
-
+'''
 class test_LennardJones(unittest.TestCase) :
     
     def test_calculate_distance_1(self):
@@ -42,3 +42,4 @@ class test_LennardJones(unittest.TestCase) :
 if __name__ == '__main__' :
     unittest.main()
 
+'''
