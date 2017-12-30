@@ -4,5 +4,8 @@ python:
 - 3.6
 before_install:
  - sudo apt-get install -qq python-numpy
+ -git clone https://github.com/numba/numba.git
+ -cd numba
+ -python setup.py install
 script:
  - pytest
