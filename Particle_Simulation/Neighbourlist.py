@@ -1,23 +1,23 @@
 import numpy as np
-import Particle_Simulation.Errors as Er
-from numba import jitclass
-from numba import float32, int8, int32, int16, int64
-
+#from numba import jitclass
+#rom numba import float32, int8, np.int32, int16, int64
+'''
 specs = [
     ('particle_positions', float32[:, :]),
     ('box_space', float32[:]),
     ('cutoff', float32),
-    ('particle_number', int32),
+    ('particle_number', np.int32),
     ('dim', int8),
     ('cell_number', int16[:]),
     ('cell_space', float32[:]),
-    ('total_cell_number', int32),
+    ('total_cell_number', np.int32),
     ('cell_list', int64[:]),
     ('particle_neighbour_list', int64[:]),
 ]
 
 
 @jitclass(specs)
+'''
 class Neighbourlist:
     def __init__(self, particles, Box, rc):
 
@@ -74,19 +74,19 @@ class Neighbourlist:
         return particle_pos
 
     def cell_neighbour_list_1D(self):
-        cell_nl = np.zeros((3, len(self.cell_list)), dtype=int32)
+        cell_nl = np.zeros((3, len(self.cell_list)), dtype=np.int32)
         for i in range(int(self.cell_number[0])):
-            pos = np.array([i], dtype=int32)
+            pos = np.array([i], dtype=np.int32)
             cell_index = self.calculate_index(pos)
             cell_nl[0][cell_index] = self.calculate_index(pos)
-            pos = np.array([i + 1], dtype=int32)
+            pos = np.array([i + 1], dtype=np.int32)
             for j in range(0, 1):
                 if pos[j] < 0:
                     pos[j] += self.cell_number[j]
                 if pos[j] > self.cell_number[j] - 1:
                     pos[j] -= self.cell_number[j]
             cell_nl[1][cell_index] = self.calculate_index(pos)
-            pos = np.array([i - 1], dtype=int32)
+            pos = np.array([i - 1], dtype=np.int32)
             for j in range(0, 1):
                 if pos[j] < 0:
                     pos[j] += self.cell_number[j]
@@ -96,62 +96,62 @@ class Neighbourlist:
         return cell_nl
 
     def cell_neighbour_list_2D(self):
-        cell_nl = np.zeros((9, len(self.cell_list)), dtype=int32)
+        cell_nl = np.zeros((9, len(self.cell_list)), dtype=np.int32)
         for i in range(int(self.cell_number[0])):
             for k in range(int(self.cell_number[1])):
-                pos = np.array([i, k], dtype=int32)
+                pos = np.array([i, k], dtype=np.int32)
                 cell_index = self.calculate_index(pos)
                 cell_nl[0][cell_index] = cell_index
-                pos = np.array([i + 1, k], dtype=int32)
+                pos = np.array([i + 1, k], dtype=np.int32)
                 for j in range(0, 2):
                     if pos[j] < 0:
                         pos[j] += self.cell_number[j]
                     if pos[j] > self.cell_number[j] - 1:
                         pos[j] -= self.cell_number[j]
                 cell_nl[1][cell_index] = self.calculate_index(pos)
-                pos = np.array([i - 1, k], dtype=int32)
+                pos = np.array([i - 1, k], dtype=np.int32)
                 for j in range(0, 2):
                     if pos[j] < 0:
                         pos[j] += self.cell_number[j]
                     if pos[j] > self.cell_number[j] - 1:
                         pos[j] -= self.cell_number[j]
                 cell_nl[2][cell_index] = self.calculate_index(pos)
-                pos = np.array([i + 1, k + 1], dtype=int32)
+                pos = np.array([i + 1, k + 1], dtype=np.int32)
                 for j in range(0, 2):
                     if pos[j] < 0:
                         pos[j] += self.cell_number[j]
                     if pos[j] > self.cell_number[j] - 1:
                         pos[j] -= self.cell_number[j]
                 cell_nl[3][cell_index] = self.calculate_index(pos)
-                pos = np.array([i - 1, k + 1], dtype=int32)
+                pos = np.array([i - 1, k + 1], dtype=np.int32)
                 for j in range(0, 2):
                     if pos[j] < 0:
                         pos[j] += self.cell_number[j]
                     if pos[j] > self.cell_number[j] - 1:
                         pos[j] -= self.cell_number[j]
                 cell_nl[4][cell_index] = self.calculate_index(pos)
-                pos = np.array([i + 1, k - 1], dtype=int32)
+                pos = np.array([i + 1, k - 1], dtype=np.int32)
                 for j in range(0, 2):
                     if pos[j] < 0:
                         pos[j] += self.cell_number[j]
                     if pos[j] > self.cell_number[j] - 1:
                         pos[j] -= self.cell_number[j]
                 cell_nl[5][cell_index] = self.calculate_index(pos)
-                pos = np.array([i - 1, k - 1], dtype=int32)
+                pos = np.array([i - 1, k - 1], dtype=np.int32)
                 for j in range(0, 2):
                     if pos[j] < 0:
                         pos[j] += self.cell_number[j]
                     if pos[j] > self.cell_number[j] - 1:
                         pos[j] -= self.cell_number[j]
                 cell_nl[6][cell_index] = self.calculate_index(pos)
-                pos = np.array([i, k + 1], dtype=int32)
+                pos = np.array([i, k + 1], dtype=np.int32)
                 for j in range(0, 2):
                     if pos[j] < 0:
                         pos[j] += self.cell_number[j]
                     if pos[j] > self.cell_number[j] - 1:
                         pos[j] -= self.cell_number[j]
                 cell_nl[7][cell_index] = self.calculate_index(pos)
-                pos = np.array([i, k - 1], dtype=int32)
+                pos = np.array([i, k - 1], dtype=np.int32)
                 for j in range(0, 2):
                     if pos[j] < 0:
                         pos[j] += self.cell_number[j]
@@ -161,63 +161,63 @@ class Neighbourlist:
         return cell_nl
 
     def cell_neighbour_list_3D(self):
-        cell_nl = np.zeros((27, len(self.cell_list)), dtype=int32)
+        cell_nl = np.zeros((27, len(self.cell_list)), dtype=np.int32)
         for i in range(int(self.cell_number[0])):
             for k in range(int(self.cell_number[1])):
                 for p in range(int(self.cell_number[2])):
-                    pos = np.array([i, k, p], dtype=int32)
+                    pos = np.array([i, k, p], dtype=np.int32)
                     cell_index = self.calculate_index(pos)
                     cell_nl[0][cell_index] = cell_index
-                    pos = np.array([i + 1, k, p], dtype=int32)
+                    pos = np.array([i + 1, k, p], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[1][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k, p], dtype=int32)
+                    pos = np.array([i - 1, k, p], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[2][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i + 1, k + 1, p], dtype=int32)
+                    pos = np.array([i + 1, k + 1, p], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[3][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k + 1, p], dtype=int32)
+                    pos = np.array([i - 1, k + 1, p], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[4][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i + 1, k - 1, p], dtype=int32)
+                    pos = np.array([i + 1, k - 1, p], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[5][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k - 1, p], dtype=int32)
+                    pos = np.array([i - 1, k - 1, p], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[6][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i, k + 1, p], dtype=int32)
+                    pos = np.array([i, k + 1, p], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[7][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i, k - 1, p], dtype=int32)
+                    pos = np.array([i, k - 1, p], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
@@ -225,63 +225,63 @@ class Neighbourlist:
                             pos[j] -= self.cell_number[j]
                     cell_nl[8][cell_index] = self.calculate_index(pos)
 
-                    pos = np.array([i, k, p + 1], dtype=int32)
+                    pos = np.array([i, k, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[9][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i + 1, k, p + 1], dtype=int32)
+                    pos = np.array([i + 1, k, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[10][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k, p + 1], dtype=int32)
+                    pos = np.array([i - 1, k, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[11][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i + 1, k + 1, p + 1], dtype=int32)
+                    pos = np.array([i + 1, k + 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[12][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k + 1, p + 1], dtype=int32)
+                    pos = np.array([i - 1, k + 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[13][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i + 1, k - 1, p + 1], dtype=int32)
+                    pos = np.array([i + 1, k - 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[14][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k - 1, p + 1], dtype=int32)
+                    pos = np.array([i - 1, k - 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[15][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i, k + 1, p + 1], dtype=int32)
+                    pos = np.array([i, k + 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[16][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i, k - 1, p + 1], dtype=int32)
+                    pos = np.array([i, k - 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
@@ -289,63 +289,63 @@ class Neighbourlist:
                             pos[j] -= self.cell_number[j]
                     cell_nl[17][cell_index] = self.calculate_index(pos)
 
-                    pos = np.array([i, k, p - 1], dtype=int32)
+                    pos = np.array([i, k, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[18][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i + 1, k, p - 1], dtype=int32)
+                    pos = np.array([i + 1, k, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[19][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k, p - 1], dtype=int32)
+                    pos = np.array([i - 1, k, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[20][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i + 1, k + 1, p - 1], dtype=int32)
+                    pos = np.array([i + 1, k + 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[21][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k + 1, p - 1], dtype=int32)
+                    pos = np.array([i - 1, k + 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[22][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i + 1, k - 1, p - 1], dtype=int32)
+                    pos = np.array([i + 1, k - 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[23][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i - 1, k - 1, p - 1], dtype=int32)
+                    pos = np.array([i - 1, k - 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[24][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i, k + 1, p - 1], dtype=int32)
+                    pos = np.array([i, k + 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
                         if pos[j] > self.cell_number[j] - 1:
                             pos[j] -= self.cell_number[j]
                     cell_nl[25][cell_index] = self.calculate_index(pos)
-                    pos = np.array([i, k - 1, p - 1], dtype=int32)
+                    pos = np.array([i, k - 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
                         if pos[j] < 0:
                             pos[j] += self.cell_number[j]
