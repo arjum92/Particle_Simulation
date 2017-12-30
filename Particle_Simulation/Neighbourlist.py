@@ -1,23 +1,23 @@
 import numpy as np
-#from numba import jitclass
-#rom numba import float32, int8, np.int32, int16, int64
-'''
+from numba import jitclass
+from numba import float32, int8, int32, int16, int64
+
 specs = [
     ('particle_positions', float32[:, :]),
     ('box_space', float32[:]),
     ('cutoff', float32),
-    ('particle_number', np.int32),
+    ('particle_number', int32),
     ('dim', int8),
     ('cell_number', int16[:]),
     ('cell_space', float32[:]),
-    ('total_cell_number', np.int32),
+    ('total_cell_number', int32),
     ('cell_list', int64[:]),
     ('particle_neighbour_list', int64[:]),
 ]
 
 
 @jitclass(specs)
-'''
+
 class Neighbourlist:
     def __init__(self, particles, Box, rc):
 
