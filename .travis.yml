@@ -21,7 +21,10 @@ install:
   - conda update conda --yes
   - conda create -n testenv --yes pip nose python=$TRAVIS_PYTHON_VERSION xraylib numpy scipy six numba mkl matplotlib
   - source activate testenv
-  - pip install numba
+  
+  - TOKEN=$(anaconda auth --create --name download-token)
+  - pip install -i https://pypi.anaconda.org/t/$TOKEN/numba/simple numba
+  
   - pip install ase
   - python setup.py install
   - pip install coveralls
