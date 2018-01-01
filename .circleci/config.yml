@@ -25,7 +25,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-       - run:
-          name: Run tests
-          command: |
-          python Particle_Simulation/test/test_Neighbourlist.py
+      - run:
+         name: Run tests
+         command: |
+         python Particle_Simulation/test/test_Neighbourlist.py
