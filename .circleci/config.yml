@@ -27,4 +27,4 @@ jobs:
             pip install -r requirements.txt
       - run:
           name: run tests
-          command: pytest
+          command: nosetests Particle_Simulation/test/test_Neighbourlist.py
