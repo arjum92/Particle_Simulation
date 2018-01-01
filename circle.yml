@@ -34,4 +34,5 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python Particle_Simulation/test/test_Neighbourlist.py
+            setup.py test
+   
