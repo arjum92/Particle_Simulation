@@ -24,7 +24,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install -r requirements.txt
+            sudo python setup.py
       - run:
           name: run tests
           command: |
