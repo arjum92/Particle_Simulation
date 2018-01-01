@@ -2,7 +2,7 @@ import numpy as np
 import unittest
 import numpy.testing as npt
 import sys
-sys.path.append('/Particle_Simulation')
+sys.path.append('$home/Particle_Simulation/')
 from Particle_Simulation.Neighbourlist import Neighbourlist
 
 '''
