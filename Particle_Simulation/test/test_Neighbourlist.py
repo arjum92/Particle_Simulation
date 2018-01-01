@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 import numpy.testing as npt
-from Particle_Simulation.Neighbourlist import Neighbourlist
+from ..Neighbourlist import Neighbourlist
 
 
 '''
