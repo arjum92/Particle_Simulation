@@ -3,6 +3,7 @@ import unittest
 import numpy.testing as npt
 from Particle_Simulation.Neighbourlist import Neighbourlist
 
+
 '''
 Pls write true test-classes
 '''
@@ -102,6 +103,85 @@ class test_System(unittest.TestCase):
         lol = s1.cell_neighbour_list_3D()
         print(lol)
 
+    def test_cnlist1d_1(self):
+        particle_positions = np.array([[9],[4],[1]])
+        box_space = np.array([12])
+        cutoff = 3
+        s1 = Neighbourlist(particle_positions, box_space, cutoff)
+        print(s1.calculate_index(np.array([1, 0, 0])))
+        reference_CnList = np.array([
+                            [3, 0, 1, 2],
+                            [0, 1, 2, 3],
+                            [1, 2, 3, 0]
+                            ])
+        cnlist = s1.cell_neighbour_list_1D()
+        print(cnlist)
+        sorted_referenceCnList = np.sort(reference_CnList, axis = 0)
+        sorted_outputCnList = np.sort(cnlist, axis =0)
+        npt.assert_equal( sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
+        
+    def test_cnlist2d_1(self):
+        particle_positions = np.array([[9, 6],[4, 5],[1, 3]])
+        box_space = np.array([12, 13])
+        cutoff = 3
+        s1 = Neighbourlist(particle_positions, box_space, cutoff)
+        reference_CnList = np.array([
+                             [13, 14, 15, 12, 1, 2, 3, 0, 5, 6, 7, 4, 9, 10, 11, 8],
+                             [1, 2, 3, 0, 5, 6, 7, 4, 9, 10, 11, 8, 13, 14, 15, 12],
+                             [5, 6, 7, 4, 9, 10, 11, 8, 13, 14, 15, 12, 1, 2, 3, 0],
+                             [12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                             [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3],
+                             [15, 12, 13, 14, 3, 0, 1, 2, 7, 4, 5, 6, 11, 8, 9, 10],
+                             [3, 0, 1, 2, 7, 4, 5, 6, 11, 8, 9, 10, 15, 12, 13, 14],
+                             [7, 4, 5, 6, 11, 8, 9, 10, 15, 12, 13, 14, 3, 0, 1, 2]
+                             ])
+        cnlist = s1.cell_neighbour_list_2D()
+        print(cnlist)
+        sorted_referenceCnList = np.sort(reference_CnList, axis = 0)
+        sorted_outputCnList = np.sort(cnlist, axis =0)
+        npt.assert_equal( sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
+    
+    def test_cnlist3d_2(self):
+        particle_positions = np.array([[9, 6, 4],[4, 5, 6],[1, 3, 6]])
+        box_space = np.array([12, 10, 10])
+        cutoff = 3
+        s1 = Neighbourlist(particle_positions, box_space, cutoff)
+        reference_CnList = np.array([
+                             [31, 32, 30, 34, 35, 33, 28, 29, 27, 4, 5, 3, 7, 8, 6, 1, 2, 0, 13, 14, 12, 16, 17, 15, 10, 11, 9, 22, 23, 21, 25, 26, 24, 19, 20, 18],
+                             [4, 5, 3, 7, 8, 6, 1, 2, 0, 13, 14, 12, 16, 17, 15, 10, 11, 9, 22, 23, 21, 25, 26, 24, 19, 20, 18, 31, 32, 30, 34, 35, 33, 28, 29, 27],
+                             [13, 14, 12, 16, 17, 15, 10, 11, 9, 22, 23, 21, 25, 26, 24, 19, 20, 18, 31, 32, 30, 34, 35, 33, 28, 29, 27, 4, 5, 3, 7, 8, 6, 1, 2, 0],
+                             [28, 29, 27, 31, 32, 30, 34, 35, 33, 1, 2, 0, 4, 5, 3, 7, 8, 6, 10, 11, 9, 13, 14, 12, 16, 17, 15, 19, 20, 18, 22, 23, 21, 25, 26, 24],
+                             [1, 2, 0, 4, 5, 3, 7, 8, 6, 10, 11, 9, 13, 14, 12, 16, 17, 15, 19, 20, 18, 22, 23, 21, 25, 26, 24, 28, 29, 27, 31, 32, 30, 34, 35, 33],
+                             [10, 11, 9, 13, 14, 12, 16, 17, 15, 19, 20, 18, 22, 23, 21, 25, 26, 24, 28, 29, 27, 31, 32, 30, 34, 35, 33, 1, 2, 0, 4, 5, 3, 7, 8, 6],
+                             [34, 35, 33, 28, 29, 27, 31, 32, 30, 7, 8, 6, 1, 2, 0, 4, 5, 3, 16, 17, 15, 10, 11, 9, 13, 14, 12, 25, 26, 24, 19, 20, 18, 22, 23, 21],
+                             [7, 8, 6, 1, 2, 0, 4, 5, 3, 16, 17, 15, 10, 11, 9, 13, 14, 12, 25, 26, 24, 19, 20, 18, 22, 23, 21, 34, 35, 33, 28, 29, 27, 31, 32, 30],
+                             [16, 17, 15, 10, 11, 9, 13, 14, 12, 25, 26, 24, 19, 20, 18, 22, 23, 21, 34, 35, 33, 28, 29, 27, 31, 32, 30, 7, 8, 6, 1, 2, 0, 4, 5, 3],
+                             [30, 31, 32, 33, 34, 35, 27, 28, 29, 3, 4, 5, 6, 7, 8, 0, 1, 2, 12, 13, 14, 15, 16, 17, 9, 10, 11, 21, 22, 23, 24, 25, 26, 18, 19, 20],
+                             [3, 4, 5, 6, 7, 8, 0, 1, 2, 12, 13, 14, 15, 16, 17, 9, 10, 11, 21, 22, 23, 24, 25, 26, 18, 19, 20, 30, 31, 32, 33, 34, 35, 27, 28, 29],
+                             [12, 13, 14, 15, 16, 17, 9, 10, 11, 21, 22, 23, 24, 25, 26, 18, 19, 20, 30, 31, 32, 33, 34, 35, 27, 28, 29, 3, 4, 5, 6, 7, 8, 0, 1, 2],
+                             [27, 28, 29, 30, 31, 32, 33, 34, 35, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+                             [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 0, 1, 2, 3, 4, 5, 6, 7, 8],
+                             [33, 34, 35, 27, 28, 29, 30, 31, 32, 6, 7, 8, 0, 1, 2, 3, 4, 5, 15, 16, 17, 9, 10, 11, 12, 13, 14, 24, 25, 26, 18, 19, 20, 21, 22, 23],
+                             [6, 7, 8, 0, 1, 2, 3, 4, 5, 15, 16, 17, 9, 10, 11, 12, 13, 14, 24, 25, 26, 18, 19, 20, 21, 22, 23, 33, 34, 35, 27, 28, 29, 30, 31, 32],
+                             [15, 16, 17, 9, 10, 11, 12, 13, 14, 24, 25, 26, 18, 19, 20, 21, 22, 23, 33, 34, 35, 27, 28, 29, 30, 31, 32, 6, 7, 8, 0, 1, 2, 3, 4, 5],
+                             [32, 30, 31, 35, 33, 34, 29, 27, 28, 5, 3, 4, 8, 6, 7, 2, 0, 1, 14, 12, 13, 17, 15, 16, 11, 9, 10, 23, 21, 22, 26, 24, 25, 20, 18, 19],
+                             [5, 3, 4, 8, 6, 7, 2, 0, 1, 14, 12, 13, 17, 15, 16, 11, 9, 10, 23, 21, 22, 26, 24, 25, 20, 18, 19, 32, 30, 31, 35, 33, 34, 29, 27, 28],
+                             [14, 12, 13, 17, 15, 16, 11, 9, 10, 23, 21, 22, 26, 24, 25, 20, 18, 19, 32, 30, 31, 35, 33, 34, 29, 27, 28, 5, 3, 4, 8, 6, 7, 2, 0, 1],
+                             [29, 27, 28, 32, 30, 31, 35, 33, 34, 2, 0, 1, 5, 3, 4, 8, 6, 7, 11, 9, 10, 14, 12, 13, 17, 15, 16, 20, 18, 19, 23, 21, 22, 26, 24, 25],
+                             [2, 0, 1, 5, 3, 4, 8, 6, 7, 11, 9, 10, 14, 12, 13, 17, 15, 16, 20, 18, 19, 23, 21, 22, 26, 24, 25, 29, 27, 28, 32, 30, 31, 35, 33, 34],
+                             [11, 9, 10, 14, 12, 13, 17, 15, 16, 20, 18, 19, 23, 21, 22, 26, 24, 25, 29, 27, 28, 32, 30, 31, 35, 33, 34, 2, 0, 1, 5, 3, 4, 8, 6, 7],
+                             [35, 33, 34, 29, 27, 28, 32, 30, 31, 8, 6, 7, 2, 0, 1, 5, 3, 4, 17, 15, 16, 11, 9, 10, 14, 12, 13, 26, 24, 25, 20, 18, 19, 23, 21, 22],
+                             [8, 6, 7, 2, 0, 1, 5, 3, 4, 17, 15, 16, 11, 9, 10, 14, 12, 13, 26, 24, 25, 20, 18, 19, 23, 21, 22, 35, 33, 34, 29, 27, 28, 32, 30, 31],
+                             [17, 15, 16, 11, 9, 10, 14, 12, 13, 26, 24, 25, 20, 18, 19, 23, 21, 22, 35, 33, 34, 29, 27, 28, 32, 30, 31, 8, 6, 7, 2, 0, 1, 5, 3, 4]
+                             ])
+        cnlist = s1.cell_neighbour_list_3D()
+        print(cnlist)
+        sorted_referenceCnList = np.sort(reference_CnList, axis = 0)
+        sorted_outputCnList = np.sort(cnlist, axis =0)
+        npt.assert_equal( sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
+    
     @unittest.expectedFailure
     def test_dimension_mismatch(self):
         # particle_position_dimension_diff_with_box
@@ -169,6 +249,44 @@ class test_System(unittest.TestCase):
         npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
         npt.assert_equal(reference_neighlist, s1.particle_neighbour_list, 'Failed', verbose=True)
 
+    def test_2d_output_validation_1(self):
+     
+        particle_positions = np.array([[1.5, 2. ], [2, 5. ], [2.5, 8. ],
+                                       [4., 4. ], [4., 8.], [5.5, 9.],
+                                       [8., 11.] , [7., 2. ], [6., 5. ], 
+                                       [6., 6.5 ], [7., 6.5 ], [10., 2. ],
+                                       [11., 9. ], [11., 11. ], [13.5, 2. ], 
+                                       [14., 5. ], [ -2., 2. ], [ 25.5, 2. ], 
+                                       [-14., 2.], [13.5,15.], [-1., -2.]])
+        box_space = np.array([12., 13.])
+        cutoff = 3
+        reference_head = np.asarray([19, 15, 2, -1, -1,  3,  5, -1,  7,  8, 10,  6, 18, -1, 12, 20])
+        reference_neighlist = np.asarray([-1, -1, -1, -1, -1,  4, -1, -1, -1, -1,  9, 
+                                          -1, -1, -1,  0,  1, 11, 14, 16, 17, 13])
+        s1 = Neighbourlist(particle_positions, box_space, cutoff)
+        s1.construct_neighborlist()
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
+        npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
+        npt.assert_equal(reference_neighlist, s1.particle_neighbour_list, 'Failed', verbose=True)
+
+#test for out of box points
+    def test_2d_output_validation_2(self):
+     
+        particle_positions = np.array([[13.5, 2. ],[14., 5. ], [ -2., 2. ], [ 25.5, 2. ], 
+                                       [-14., 2.], [13.5,15.], [-1., -2.]])
+        box_space = np.array([12., 13.])
+        cutoff = 3
+        reference_head = np.asarray([ 5,  1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  4, -1, -1,  6])
+        reference_neighlist = np.asarray([-1, -1, -1,  0,  2,  3, -1])
+        s1 = Neighbourlist(particle_positions, box_space, cutoff)
+        s1.construct_neighborlist()
+        print(s1.cell_list)
+        print(s1.particle_neighbour_list)
+        npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
+        npt.assert_equal(reference_neighlist, s1.particle_neighbour_list, 'Failed', verbose=True)
+
+    
     def test_1d_output_validation_3(self):
         particle_positions = np.array([[-1.75], [-0.25], [1.5], [2.5],
                                        [3.0], [4.5], [5.5],
@@ -235,33 +353,7 @@ class test_System(unittest.TestCase):
         npt.assert_equal(reference_neighlist, s1.particle_neighbour_list, 'Failed', verbose=True)
 
 
-''' Yet to implement
-   def test_2d_output_validation(self):
-       particle_positions = np.array( [[0.0, 0.0], [10.5,0.0], [0.0, 12.0], 
-                                       [10.5, 12], [7, 0], [10.5, 6],
-                                       [7.0, 12.0], [0.0,6.0], [3.5, 3.0], 
-                                       [7.0, 3.0], [3.5 ,6.0], [7.0,6.0],
-                                       [7.0,5.0], [6.0, 6.0], [3.5,6.0],
-                                       [8.0,9.0], [1.0,4.0], [4.0,1.0],
-                                       [5.0,11.0], [2.0,11.0], [9.0,2.0],
-                                       [9.5,4.0], [7.5,7.5], [10.0,10.5],
-                                       [3.0,7.0],[2.5,9.0],
-                                       [3.5,10.0],[8.0,8.0],[9.0,9.0],
-                                       [10.0,10.0],[4.0,3.0] ] )
-       box_space = np.array([10.5 , 11.0])
-       reference_neighlist = np.asarray([-1., 0., 1., 2., -1., 4., 5., 6., -1., 8., 9., 10.])
-       box_space = np.array([10])
-       cutoff = 3
-       s1 = System(particle_positions, box_space, cutoff)
-       s1.construct_neighborlist()
-       print(s1.cell_list)
-       print(s1.particle_neighbour_list)
-       npt.assert_equal(reference_head, s1.cell_list ,'Failed',verbose=True )
-       npt.assert_equal(reference_neighlist, s1.particle_neighbour_list ,'Failed',verbose=True )
-   
 
-   
-'''
 '''
     def test_benchmark(self):
         particle_positions = []
