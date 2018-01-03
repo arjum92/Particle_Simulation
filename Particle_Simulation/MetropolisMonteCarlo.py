@@ -6,6 +6,7 @@ class MetropolisMonteCarlo:
 
     BOLTZMANN_CONSTANT = 1
 
+    
     @staticmethod
     def generate_trial_configuration(system, parameters):
 
@@ -42,6 +43,21 @@ class MetropolisMonteCarlo:
                 return trial_system
             else:
                 return system
+
+
+        beta = 1 / (MetropolisMonteCarlo.BOLTZMANN_CONSTANT * parameters.temperature)
+
+        acceptance_probability = np.exp(-beta * (trial_system.energy - system.energy))
+
+        if acceptance_probability >= 1:
+            return trial_system
+        else:
+            random_number = np.random.rand(1)[0]
+            if random_number <= acceptance_probability:
+                return trial_system
+            else:
+                return system
+
 
     @staticmethod
     def _generate_trial_position(position, parameters):
