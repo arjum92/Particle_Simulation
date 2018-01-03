@@ -8,3 +8,4 @@ dependencies:
 test:
   post:
     - python setup.py test
+    - bash <(curl -s https://codecov.io/bash)
