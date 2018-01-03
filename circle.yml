@@ -5,7 +5,9 @@ machine:
 dependencies:
   pre:
     - pip install -r requirements.txt
+    - pip install --user codecov
 test:
   post:
     - python setup.py test
     - bash <(curl -s https://codecov.io/bash)
+    - codecov
