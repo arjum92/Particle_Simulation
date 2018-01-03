@@ -3,7 +3,7 @@ machine:
     Asia/Seoul
 
   python:
-    version: 3.6.0
+    version: 2.7
 
 dependencies:
   pre:
