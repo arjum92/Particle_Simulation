@@ -7,7 +7,7 @@ install:
   - pip install codecov
 # command to run tests
 script:
-  - python setup.py test
+  - python setup.py test --cov=codecov
 after_success:
   - codecov
   - bash <(curl -s https://codecov.io/bash)
