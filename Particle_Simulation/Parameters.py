@@ -6,8 +6,9 @@ class Parameters:
         self.mc_update_radius = None
         self.particle_types = None
 
-    def __init__(self, temperature, es_sigma, mc_update_radius, particle_types):
+    def __init__(self, temperature, box, es_sigma, update_radius, particle_types):
         self.temperature = temperature
+        self.box = box
         self.es_sigma = es_sigma
-        self.mc_update_radius = mc_update_radius
+        self.update_radius = update_radius
         self.particle_types = particle_types
