@@ -27,7 +27,7 @@ class test_LennardJones(unittest.TestCase):
         print(reference_potential)
         particle_type = ParticleType(name="Natrium", mass=2, charge=2, lj_epsilon=1.25, lj_sigma=0.5)
         particle_type = np.array([particle_type])
-        parameters = Parameters(temperature=0, es_sigma=0, mc_update_radius=1, particle_types=particle_type)
+        parameters = Parameters(temperature=0, es_sigma=0, update_radius=1, particle_types=particle_type,box=np.array([1,1,1]))
         particle_1 = Particle(position=np.array([1, 2, 3]), type_index=0)
         particle_2 = Particle(position=np.array([2, 3.5, 6]), type_index=0)
         lg_value = LennardJones._calculate_potential(particle_1, particle_2, parameters)
