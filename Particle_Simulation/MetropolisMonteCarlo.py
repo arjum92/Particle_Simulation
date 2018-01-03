@@ -1,23 +1,21 @@
 import numpy as np
-from Energy import Energy
 
 
 class MetropolisMonteCarlo:
-
     BOLTZMANN_CONSTANT = 1
 
-    
     @staticmethod
     def generate_trial_configuration(system, parameters):
 
         n_particles = len(system.particles)
         update_probability = np.random.rand(1)[0]
-        
+
         for i in range(0, n_particles):
             random_number = np.random.rand(1)[0]
             if random_number <= update_probability:
-                system.particles[i].position = MetropolisMonteCarlo._generate_trial_position(system.particles[i].position,
-                                                                                             parameters)
+                system.particles[i].position = MetropolisMonteCarlo._generate_trial_position(
+                    system.particles[i].position,
+                    parameters)
 
         return system
 
@@ -43,21 +41,6 @@ class MetropolisMonteCarlo:
                 return trial_system
             else:
                 return system
-
-
-        beta = 1 / (MetropolisMonteCarlo.BOLTZMANN_CONSTANT * parameters.temperature)
-
-        acceptance_probability = np.exp(-beta * (trial_system.energy - system.energy))
-
-        if acceptance_probability >= 1:
-            return trial_system
-        else:
-            random_number = np.random.rand(1)[0]
-            if random_number <= acceptance_probability:
-                return trial_system
-            else:
-                return system
-
 
     @staticmethod
     def _generate_trial_position(position, parameters):
