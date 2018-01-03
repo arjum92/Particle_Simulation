@@ -11,8 +11,10 @@ class MetropolisMonteCarlo:
 
         n_particles = len(system.particles)
         update_probability = np.random.rand(1)[0]
+        
         for i in range(0, n_particles):
-            if np.random.rand(1)[0] <= update_probability:
+            random_number = np.random.rand(1)[0]
+            if random_number <= update_probability:
                 system.particles[i].position = MetropolisMonteCarlo._generate_trial_position(system.particles[i].position,
                                                                                              parameters)
 
@@ -28,10 +30,8 @@ class MetropolisMonteCarlo:
 
     @staticmethod
     def evaluate_trial_configuration(system, trial_system, parameters):
-        raise NotImplementedError
 
         beta = 1 / (MetropolisMonteCarlo.BOLTZMANN_CONSTANT * parameters.temperature)
-
         acceptance_probability = np.exp(-beta * (trial_system.energy.overall_energy - system.energy.overall_energy))
 
         if acceptance_probability >= 1:
