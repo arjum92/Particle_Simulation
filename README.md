@@ -1,4 +1,6 @@
 [![CircleCI](https://circleci.com/gh/BioFreak95/Particle_Simulation/tree/master.svg?style=svg)](https://circleci.com/gh/BioFreak95/Particle_Simulation/tree/master)
+.. image:: https://img.shields.io/travis/BioFreak95/Particle_Simulation/master.svg
+   :target: https://travis-ci.org/BioFreak95/Particle_Simulation
 # Particle_Simulation
 Softwareproject for Computational Science at FU Berlin WS2017
 
