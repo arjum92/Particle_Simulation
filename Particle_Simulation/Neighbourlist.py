@@ -2,6 +2,13 @@ import numpy as np
 from numba import jitclass
 from numba import float32, int8, int32, int16, int64
 
+
+cell_shift_list = np.array([
+    [0, 1, -1, 1, -1, 1, -1, 0, 0, 0, 1, -1, 1, -1, 1, -1, 0, 0, 0, 1, -1, 1, -1, 1, -1, 0, 0],
+    [0, 0, 0, 1, 1, -1, -1, 1, -1, 0, 0, 0, 1, 1, -1, -1, 1, -1, 0, 0, 0, 1, 1, -1, -1, 1, -1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1]])
+
+
 specs = [
     ('particle_positions', float32[:, :]),
     ('box_space', float32[:]),
@@ -15,16 +22,16 @@ specs = [
     ('particle_neighbour_list', int64[:]),
 ]
 
-
 @jitclass(specs)
 class Neighbourlist:
-    def __init__(self, particles, Box, rc):
 
-        self.particle_positions = particles.astype(np.float32)
+    def __init__(self, particle_positions, Box, rc):
+
+        self.particle_number = len(particle_positions)
+        self.particle_positions = particle_positions.astype(np.float32)
+
         self.box_space = Box.astype(np.float32)
         self.cutoff = rc
-
-        self.particle_number = len(particles)
 
         self.dim = len(self.particle_positions[0])
         self.cell_number = np.zeros(self.dim, dtype=np.int16)
@@ -364,28 +371,3 @@ class Neighbourlist:
         return cell_nl
 
 
-'''
-    Old Code - Don't delete till v1.0
-
-    def construct_3dneighborlist(self):
-        self.cellnumber = np.floor(np.array([self.Box[0]/self.rc,self.Box[1]/self.rc,self.Box[2]/self.rc]))
-        self.cellspace = np.array([self.Box[0]/self.cellnumber[0],self.Box[1]/self.cellnumber[1],
-                                   self.Box[2]/self.cellnumber[2]])
-        self.totalcellnumber = int(np.prod(self.cellnumber))
-        self.head = np.zeros(self.totalcellnumber)-1
-        self.list = np.zeros(self.particlenumber)-1
-        self.mc = np.zeros(3)
-    
-        for i in range(self.particlenumber):
-            for a in range(0,2):
-                self.mc[a] = np.floor(self.particles[i][a] / self.cellspace[a])
-            index = int(self.mc[2] + self.mc[1]*self.cellnumber[2] + self.mc[0]*self.cellnumber[1]*self.cellnumber[2])
-            self.list[i] = self.head[index]
-            self.head[index] = i
-    
-    self.cell_number = np.ones(3)  
-    self.cell_space = np.zeros(3)
-
-    cell_index = int(particle_cell_location[2] + particle_cell_location[1] * self.cell_number[2] +
-        particle_cell_location[0] * self.cell_number[2] * self.cell_number[1])
-'''
