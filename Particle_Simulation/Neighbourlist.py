@@ -2,6 +2,13 @@ import numpy as np
 from numba import jitclass
 from numba import float32, int8, int32, int16, int64
 
+
+cell_shift_list = np.array([
+    [0, 1, -1, 1, -1, 1, -1, 0, 0, 0, 1, -1, 1, -1, 1, -1, 0, 0, 0, 1, -1, 1, -1, 1, -1, 0, 0],
+    [0, 0, 0, 1, 1, -1, -1, 1, -1, 0, 0, 0, 1, 1, -1, -1, 1, -1, 0, 0, 0, 1, 1, -1, -1, 1, -1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1]])
+
+
 specs = [
     ('particle_positions', float32[:, :]),
     ('box_space', float32[:]),
