@@ -83,7 +83,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([4, 4])
         cutoff = 1
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-
+        print(s1.calculate_index(np.array([-1,1])))
         print(s1.cell_neighbour_list_2D())
 
     def test_list1d(self):
@@ -116,7 +116,7 @@ class test_System(unittest.TestCase):
         cnlist = s1.cell_neighbour_list_1D()
         print(cnlist)
         sorted_referenceCnList = np.sort(reference_CnList, axis=0)
-        sorted_outputCnList = np.sort(cnlist, axis=0)
+        sorted_outputCnList = np.sort(cnlist[:,:,0], axis=0)
         npt.assert_equal(sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
 
     def test_cnlist2d_1(self):
@@ -136,9 +136,8 @@ class test_System(unittest.TestCase):
             [7, 4, 5, 6, 11, 8, 9, 10, 15, 12, 13, 14, 3, 0, 1, 2]
         ])
         cnlist = s1.cell_neighbour_list_2D()
-        print(cnlist)
         sorted_referenceCnList = np.sort(reference_CnList, axis=0)
-        sorted_outputCnList = np.sort(cnlist, axis=0)
+        sorted_outputCnList = np.sort(cnlist[:,:,0], axis=0)
         npt.assert_equal(sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
 
     def test_cnlist3d_2(self):
@@ -205,7 +204,7 @@ class test_System(unittest.TestCase):
         cnlist = s1.cell_neighbour_list_3D()
         print(cnlist)
         sorted_referenceCnList = np.sort(reference_CnList, axis=0)
-        sorted_outputCnList = np.sort(cnlist, axis=0)
+        sorted_outputCnList = np.sort(cnlist[:,:,0], axis=0)
         npt.assert_equal(sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
 
     @unittest.expectedFailure
