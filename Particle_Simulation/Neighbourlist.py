@@ -302,7 +302,7 @@ class Neighbourlist:
         return [pos, k]
 
     def calc_cell_neighbours(self):
-        cell_nl = np.zeros((1, 1))
+        cell_nl = np.zeros((1, 1, 2), dtype=np.int32)
         if self.dim == 1:
             cell_nl = self.cell_neighbour_list_1D()
         if self.dim == 2:
