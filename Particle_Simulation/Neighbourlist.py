@@ -17,7 +17,6 @@ specs = [
 
 
 @jitclass(specs)
-
 class Neighbourlist:
     def __init__(self, particles, Box, rc):
 

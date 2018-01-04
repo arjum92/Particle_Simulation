@@ -1,5 +1,4 @@
 class Parameters:
-
     def __init__(self):
         self.temperature = None
         self.es_sigma = None

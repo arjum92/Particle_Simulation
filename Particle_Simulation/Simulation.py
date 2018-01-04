@@ -1,5 +1,4 @@
 class Simulation:
-
     def __init__(self, system, parameters):
         self.system = system
         self.parameters = parameters

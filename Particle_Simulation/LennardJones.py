@@ -2,21 +2,20 @@ import numpy as np
 
 
 class LennardJones:
-
     @staticmethod
     def calculate_energy(system, parameters):
         raise NotImplementedError
 
         # couldnt test this yet
         #
-        #lj_energy = 0
-        #for i in range(0,len(system.neighborlist.head)):
+        # lj_energy = 0
+        # for i in range(0,len(system.neighborlist.head)):
         #    j = system.neighborlist.list[system.neighborlist.head[i]]
         #    while(x != -1):
         #        lj_energy += LennardJones._calculate_lennardjones_potential(system.particles[i], system.particles[j])
         #        j = system.neighborlist.list[j]
         #
-        #return lj_energy
+        # return lj_energy
 
     @staticmethod
     def _calculate_potential(particle_1, particle_2, parameters):
@@ -52,15 +51,6 @@ class LennardJones:
                               parameters.particle_types[particle_2.type_index].lj_epsilon)
 
         return epsilon
-
-
-
-
-
-
-
-
-
 
     # this function should be moved to a more general spot since it is needed for
     # the computation of the short-ranged Coulomb interaction energy as well and
