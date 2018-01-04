@@ -39,10 +39,9 @@ class Neighbourlist:
         self.cell_list = np.zeros(self.total_cell_number, dtype=np.int64) - 1
         self.particle_neighbour_list = np.zeros(self.particle_number, dtype=np.int64) - 1
 
-    def update_neighbourlist(self):
-        raise NotImplementedError()
+        self.construct_neighbourlist()
 
-    def construct_neighborlist(self):
+    def construct_neighbourlist(self):
 
         for i in range(self.particle_number):
 

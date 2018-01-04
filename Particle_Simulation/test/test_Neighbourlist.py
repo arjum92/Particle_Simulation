@@ -14,7 +14,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([4])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -23,7 +23,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([4, 4])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -33,7 +33,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([0.10, 0.10])
         cutoff = 0.025
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.particle_neighbour_list)
         print(s1.cell_list)
 
@@ -42,7 +42,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([4, 4, 4])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -51,7 +51,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([9, 6, 4])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -65,7 +65,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([1, 1])
         cutoff = 0.1
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -74,7 +74,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([2, 2], dtype=np.int32)
         cutoff = 1
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -229,7 +229,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([10.5, 11.0])
         cutoff = 4.6
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
 
     @unittest.expectedFailure
     def test_string_value(self):
@@ -241,7 +241,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([10.5, 11.0])
         cutoff = 4.6
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
 
     def test_1d_output_validation_1(self):
         particle_positions = np.array([[1.5], [2.5],
@@ -253,7 +253,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([10])
         cutoff = 3
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
         npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
@@ -269,7 +269,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([10])
         cutoff = 3
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
         npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
@@ -289,7 +289,7 @@ class test_System(unittest.TestCase):
         reference_neighlist = np.asarray([-1, -1, -1, -1, -1, 4, -1, -1, -1, -1, 9,
                                           -1, -1, -1, 0, 1, 11, 14, 16, 17, 13])
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
         npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
@@ -304,7 +304,7 @@ class test_System(unittest.TestCase):
         reference_head = np.asarray([5, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, 6])
         reference_neighlist = np.asarray([-1, -1, -1, 0, 2, 3, -1])
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
         npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
@@ -321,7 +321,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([10])
         cutoff = 3
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
         npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
@@ -369,7 +369,7 @@ class test_System(unittest.TestCase):
 
         cutoff = 3
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        s1.construct_neighborlist()
+        s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
         npt.assert_equal(reference_head, s1.cell_list, 'Failed', verbose=True)
