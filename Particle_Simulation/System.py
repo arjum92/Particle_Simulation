@@ -20,3 +20,4 @@ class System:
 
         if System.cell_neighbour_list is None:
             System.cell_neighbour_list = self.neighbourlist.calc_cell_neighbours()
+        self.k_vectors = [1,1,1]
