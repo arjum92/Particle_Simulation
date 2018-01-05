@@ -1,6 +1,6 @@
 import numpy as np
-from Particle import Particle
-from System import System
+from Particle_Simulation.Particle import Particle
+from Particle_Simulation.System import System
 import Neighbourlist
 
 
