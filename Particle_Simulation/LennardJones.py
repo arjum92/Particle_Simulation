@@ -1,7 +1,8 @@
 import numpy as np
+
 from Particle_Simulation.Particle import Particle
 from Particle_Simulation.System import System
-import Neighbourlist
+import Particle_Simulation.Neighbourlist
 
 
 class LennardJones:
