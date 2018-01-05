@@ -1,21 +1,64 @@
 import numpy as np
+from Particle_Simulation.Particle import Particle
+from Particle_Simulation.System import System
+import Neighbourlist
 
 
 class LennardJones:
+
     @staticmethod
     def calculate_energy(system, parameters):
-        raise NotImplementedError
 
-        # couldnt test this yet
-        #
-        # lj_energy = 0
-        # for i in range(0,len(system.neighborlist.head)):
-        #    j = system.neighborlist.list[system.neighborlist.head[i]]
-        #    while(x != -1):
-        #        lj_energy += LennardJones._calculate_lennardjones_potential(system.particles[i], system.particles[j])
-        #        j = system.neighborlist.list[j]
-        #
-        # return lj_energy
+        lj_energy = 0
+        neighbour_cell_number = 3 ** system.neighbourlist.dim
+
+        for i in range(system.neighbourlist.total_cell_number):
+            particle_index_1 = system.neighbourlist.cell_list[i]
+
+            while particle_index_1 != -1:
+
+                for k in range(neighbour_cell_number):
+                    cell_index = System.cell_neighbour_list[k][i][0]
+                    particle_index_2 = system.neighbourlist.cell_list[cell_index]
+
+                    while particle_index_2 != -1:
+
+                        particle_1 = system.particles[particle_index_1]
+                        particle_2 = system.particles[particle_index_2]
+
+                        if particle_index_1 != particle_index_2:
+                            if System.cell_neighbour_list[k][i][1] == 0:
+                                if particle_index_1 < particle_index_2:
+                                    lj_energy += LennardJones._calculate_potential(particle_1, particle_2, parameters)
+
+                            elif System.cell_neighbour_list[k][i][1] != 0:
+
+                                box_shift = LennardJones._determine_box_shift(i, k, parameters)
+                                particle_2 = Particle(type_index=particle_2.type_index,
+                                                      position=particle_2.position + box_shift)
+
+                                if LennardJones._calculate_distance(particle_1, particle_2) < parameters.cutoff_radius:
+                                    lj_energy += LennardJones._calculate_potential(particle_1, particle_2, parameters)
+
+                        particle_index_2 = system.neighbourlist.particle_neighbour_list[particle_index_2]
+                particle_index_1 = system.neighbourlist.particle_neighbour_list[particle_index_1]
+
+        return lj_energy
+
+    @staticmethod
+    def _determine_box_shift(cell_index, cell_neighbour_index, parameters):
+
+        box_shift = np.zeros((len(parameters.box)))
+        if System.cell_neighbour_list[cell_neighbour_index][cell_index][1] != 0:
+            for i in range(len(parameters.box)):
+                if Neighbourlist.cell_shift_list[i][cell_neighbour_index] == 1:
+                    box_shift[i] = parameters.box[i]
+                elif Neighbourlist.cell_shift_list[i][cell_neighbour_index] == -1:
+                    box_shift[i] = -parameters.box[i]
+                else:
+                    continue
+
+        return box_shift
 
     @staticmethod
     def _calculate_potential(particle_1, particle_2, parameters):

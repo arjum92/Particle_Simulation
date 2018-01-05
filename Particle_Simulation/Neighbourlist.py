@@ -79,18 +79,21 @@ class Neighbourlist:
         cell_nl = np.zeros((3, len(self.cell_list), 2), dtype=np.int32)
         for i in range(int(self.cell_number[0])):
             shift = 0
+            sh = np.zeros((1))
             pos = np.array([i], dtype=np.int32)
             cell_index = self.calculate_index(pos)
             cell_nl[0][cell_index][0] = self.calculate_index(pos)
             cell_nl[0][cell_index][1] = shift
             pos = np.array([i + 1], dtype=np.int32)
             for j in range(0, 1):
-                [pos[j], shift] = self.cell_shift(j, pos[j])
+                [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                shift = sh.sum()
             cell_nl[1][cell_index][0] = self.calculate_index(pos)
             cell_nl[1][cell_index][1] = shift
             pos = np.array([i - 1], dtype=np.int32)
             for j in range(0, 1):
-                [pos[j], shift] = self.cell_shift(j, pos[j])
+                [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                shift = sh.sum()
             cell_nl[2][cell_index][0] = self.calculate_index(pos)
             cell_nl[2][cell_index][1] = shift
         return cell_nl
@@ -100,48 +103,57 @@ class Neighbourlist:
         for i in range(int(self.cell_number[0])):
             for k in range(int(self.cell_number[1])):
                 shift = 0
+                sh = np.zeros((2))
                 pos = np.array([i, k], dtype=np.int32)
                 cell_index = self.calculate_index(pos)
                 cell_nl[0][cell_index][0] = cell_index
                 cell_nl[0][cell_index][1] = shift
                 pos = np.array([i + 1, k], dtype=np.int32)
                 for j in range(0, 2):
-                    [pos[j], shift] = self.cell_shift(j, pos[j])
+                    [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                    shift = sh.sum()
                 cell_nl[1][cell_index][0] = self.calculate_index(pos)
                 cell_nl[1][cell_index][1] = shift
                 pos = np.array([i - 1, k], dtype=np.int32)
                 for j in range(0, 2):
-                    [pos[j], shift] = self.cell_shift(j, pos[j])
+                    [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                    shift = sh.sum()
                 cell_nl[2][cell_index][0] = self.calculate_index(pos)
                 cell_nl[2][cell_index][1] = shift
                 pos = np.array([i + 1, k + 1], dtype=np.int32)
                 for j in range(0, 2):
-                    [pos[j], shift] = self.cell_shift(j, pos[j])
+                    [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                    shift = sh.sum()
                 cell_nl[3][cell_index][0] = self.calculate_index(pos)
                 cell_nl[3][cell_index][1] = shift
                 pos = np.array([i - 1, k + 1], dtype=np.int32)
                 for j in range(0, 2):
-                    [pos[j], shift] = self.cell_shift(j, pos[j])
+                    [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                    shift = sh.sum()
                 cell_nl[4][cell_index][0] = self.calculate_index(pos)
                 cell_nl[4][cell_index][1] = shift
                 pos = np.array([i + 1, k - 1], dtype=np.int32)
                 for j in range(0, 2):
-                    [pos[j], shift] = self.cell_shift(j, pos[j])
+                    [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                    shift = sh.sum()
                 cell_nl[5][cell_index][0] = self.calculate_index(pos)
                 cell_nl[5][cell_index][1] = shift
                 pos = np.array([i - 1, k - 1], dtype=np.int32)
                 for j in range(0, 2):
-                    [pos[j], shift] = self.cell_shift(j, pos[j])
+                    [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                    shift = sh.sum()
                 cell_nl[6][cell_index][0] = self.calculate_index(pos)
                 cell_nl[6][cell_index][1] = shift
                 pos = np.array([i, k + 1], dtype=np.int32)
                 for j in range(0, 2):
-                    [pos[j], shift] = self.cell_shift(j, pos[j])
+                    [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                    shift = sh.sum()
                 cell_nl[7][cell_index][0] = self.calculate_index(pos)
                 cell_nl[7][cell_index][1] = shift
                 pos = np.array([i, k - 1], dtype=np.int32)
                 for j in range(0, 2):
-                    [pos[j], shift] = self.cell_shift(j, pos[j])
+                    [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                    shift = sh.sum()
                 cell_nl[8][cell_index][0] = self.calculate_index(pos)
                 cell_nl[8][cell_index][1] = shift
         return cell_nl
@@ -152,140 +164,167 @@ class Neighbourlist:
             for k in range(int(self.cell_number[1])):
                 for p in range(int(self.cell_number[2])):
                     shift = 0
+                    sh = np.zeros((3))
                     pos = np.array([i, k, p], dtype=np.int32)
                     cell_index = self.calculate_index(pos)
                     cell_nl[0][cell_index][0] = cell_index
                     cell_nl[0][cell_index][1] = shift
                     pos = np.array([i + 1, k, p], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[1][cell_index][0] = self.calculate_index(pos)
                     cell_nl[1][cell_index][1] = shift
                     pos = np.array([i - 1, k, p], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[2][cell_index][0] = self.calculate_index(pos)
                     cell_nl[2][cell_index][1] = shift
                     pos = np.array([i + 1, k + 1, p], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[3][cell_index][0] = self.calculate_index(pos)
                     cell_nl[3][cell_index][1] = shift
                     pos = np.array([i - 1, k + 1, p], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[4][cell_index][0] = self.calculate_index(pos)
                     cell_nl[4][cell_index][1] = shift
                     pos = np.array([i + 1, k - 1, p], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[5][cell_index][0] = self.calculate_index(pos)
                     cell_nl[5][cell_index][1] = shift
                     pos = np.array([i - 1, k - 1, p], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[6][cell_index][0] = self.calculate_index(pos)
                     cell_nl[6][cell_index][1] = shift
                     pos = np.array([i, k + 1, p], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[7][cell_index][0] = self.calculate_index(pos)
                     cell_nl[7][cell_index][1] = shift
                     pos = np.array([i, k - 1, p], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[8][cell_index][0] = self.calculate_index(pos)
                     cell_nl[8][cell_index][1] = shift
 
                     pos = np.array([i, k, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[9][cell_index][0] = self.calculate_index(pos)
                     cell_nl[9][cell_index][1] = shift
                     pos = np.array([i + 1, k, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[10][cell_index][0] = self.calculate_index(pos)
                     cell_nl[10][cell_index][1] = shift
                     pos = np.array([i - 1, k, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[11][cell_index][0] = self.calculate_index(pos)
                     cell_nl[11][cell_index][1] = shift
                     pos = np.array([i + 1, k + 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[12][cell_index][0] = self.calculate_index(pos)
                     cell_nl[12][cell_index][1] = shift
                     pos = np.array([i - 1, k + 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[13][cell_index][0] = self.calculate_index(pos)
                     cell_nl[13][cell_index][1] = shift
                     pos = np.array([i + 1, k - 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[14][cell_index][0] = self.calculate_index(pos)
                     cell_nl[14][cell_index][1] = shift
                     pos = np.array([i - 1, k - 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[15][cell_index][0] = self.calculate_index(pos)
                     cell_nl[15][cell_index][1] = shift
                     pos = np.array([i, k + 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[16][cell_index][0] = self.calculate_index(pos)
                     cell_nl[16][cell_index][1] = shift
                     pos = np.array([i, k - 1, p + 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[17][cell_index][0] = self.calculate_index(pos)
                     cell_nl[17][cell_index][1] = shift
 
                     pos = np.array([i, k, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[18][cell_index][0] = self.calculate_index(pos)
                     cell_nl[18][cell_index][1] = shift
                     pos = np.array([i + 1, k, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[19][cell_index][0] = self.calculate_index(pos)
                     cell_nl[19][cell_index][1] = shift
                     pos = np.array([i - 1, k, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[20][cell_index][0] = self.calculate_index(pos)
                     cell_nl[20][cell_index][1] = shift
                     pos = np.array([i + 1, k + 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[21][cell_index][0] = self.calculate_index(pos)
                     cell_nl[21][cell_index][1] = shift
                     pos = np.array([i - 1, k + 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[22][cell_index][0] = self.calculate_index(pos)
                     cell_nl[22][cell_index][1] = shift
                     pos = np.array([i + 1, k - 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[23][cell_index][0] = self.calculate_index(pos)
                     cell_nl[23][cell_index][1] = shift
                     pos = np.array([i - 1, k - 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[24][cell_index][0] = self.calculate_index(pos)
                     cell_nl[24][cell_index][1] = shift
                     pos = np.array([i, k + 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[25][cell_index][0] = self.calculate_index(pos)
                     cell_nl[25][cell_index][1] = shift
                     pos = np.array([i, k - 1, p - 1], dtype=np.int32)
                     for j in range(0, 3):
-                        [pos[j], shift] = self.cell_shift(j, pos[j])
+                        [pos[j], sh[j]] = self.cell_shift(j, pos[j])
+                        shift = sh.sum()
                     cell_nl[26][cell_index][0] = self.calculate_index(pos)
                     cell_nl[26][cell_index][1] = shift
 
