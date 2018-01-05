@@ -6,7 +6,6 @@ import Particle_Simulation.Neighbourlist
 
 
 class LennardJones:
-
     @staticmethod
     def calculate_energy(system, parameters):
 
@@ -30,7 +29,10 @@ class LennardJones:
                         if particle_index_1 != particle_index_2:
                             if System.cell_neighbour_list[k][i][1] == 0:
                                 if particle_index_1 < particle_index_2:
-                                    lj_energy += LennardJones._calculate_potential(particle_1, particle_2, parameters)
+                                    if LennardJones._calculate_distance(particle_1,
+                                                                        particle_2) < parameters.cutoff_radius:
+                                        lj_energy += LennardJones._calculate_potential(particle_1, particle_2,
+                                                                                       parameters)
 
                             elif System.cell_neighbour_list[k][i][1] != 0:
 

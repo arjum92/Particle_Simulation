@@ -4,13 +4,12 @@ from Particle_Simulation.Neighbourlist import Neighbourlist
 
 
 class System:
-
     cell_neighbour_list = None
 
     def __init__(self, particles, parameters):
         self.particles = particles
         self.energy = Energy()
-        self.k_vectors = [1,1,1]
+        self.k_vectors = [1, 1, 1]
 
         x = []
         for i in range(len(particles)):
