@@ -14,7 +14,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([4])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
+
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -23,7 +23,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([4, 4])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
+
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -33,7 +33,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([0.10, 0.10])
         cutoff = 0.025
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
+
         print(s1.particle_neighbour_list)
         print(s1.cell_list)
 
@@ -42,7 +42,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([4, 4, 4])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
+
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -51,7 +51,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([9, 6, 4])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
+
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -65,7 +65,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([1, 1])
         cutoff = 0.1
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
+
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -74,7 +74,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([2, 2], dtype=np.int32)
         cutoff = 1
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
+
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
 
@@ -83,7 +83,7 @@ class test_System(unittest.TestCase):
         box_space = np.array([4, 4])
         cutoff = 1
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        print(s1.calculate_index(np.array([-1,1])))
+        print(s1.calculate_index(np.array([-1, 1])))
         print(s1.cell_neighbour_list_2D())
 
     def test_list1d(self):
@@ -116,7 +116,7 @@ class test_System(unittest.TestCase):
         cnlist = s1.cell_neighbour_list_1D()
         print(cnlist)
         sorted_referenceCnList = np.sort(reference_CnList, axis=0)
-        sorted_outputCnList = np.sort(cnlist[:,:,0], axis=0)
+        sorted_outputCnList = np.sort(cnlist[:, :, 0], axis=0)
         npt.assert_equal(sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
 
     def test_cnlist2d_1(self):
@@ -137,7 +137,7 @@ class test_System(unittest.TestCase):
         ])
         cnlist = s1.cell_neighbour_list_2D()
         sorted_referenceCnList = np.sort(reference_CnList, axis=0)
-        sorted_outputCnList = np.sort(cnlist[:,:,0], axis=0)
+        sorted_outputCnList = np.sort(cnlist[:, :, 0], axis=0)
         npt.assert_equal(sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
 
     def test_cnlist3d_2(self):
@@ -204,7 +204,7 @@ class test_System(unittest.TestCase):
         cnlist = s1.cell_neighbour_list_3D()
         print(cnlist)
         sorted_referenceCnList = np.sort(reference_CnList, axis=0)
-        sorted_outputCnList = np.sort(cnlist[:,:,0], axis=0)
+        sorted_outputCnList = np.sort(cnlist[:, :, 0], axis=0)
         npt.assert_equal(sorted_referenceCnList, sorted_outputCnList, 'Failed', verbose=True)
 
     @unittest.expectedFailure
@@ -228,7 +228,6 @@ class test_System(unittest.TestCase):
         box_space = np.array([10.5, 11.0])
         cutoff = 4.6
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
 
     @unittest.expectedFailure
     def test_string_value(self):
@@ -240,7 +239,6 @@ class test_System(unittest.TestCase):
         box_space = np.array([10.5, 11.0])
         cutoff = 4.6
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        
 
     def test_1d_output_validation_1(self):
         particle_positions = np.array([[1.5], [2.5],

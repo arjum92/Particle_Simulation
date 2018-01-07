@@ -1,5 +1,4 @@
 class Energy:
-
     def __init__(self):
         self.overall_energy = None
         self.lj_energy = None
@@ -21,8 +20,8 @@ class Energy:
     def calculate_es_energy(self):
 
         if self.es_longranged_energy is None or \
-           self.es_shortranged_energy is None or \
-           self.es_selfinteraction_energy is None:
+                        self.es_shortranged_energy is None or \
+                        self.es_selfinteraction_energy is None:
             raise ValueError("Some energy values are not defined. Overall energy can only be computed when all sub "
                              "energies are available.")
         else:
