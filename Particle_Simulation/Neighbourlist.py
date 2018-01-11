@@ -105,7 +105,7 @@ class Neighbourlist:
         return cell_nl
 
     def cell_neighbour_list_2D(self):
-        cell_nl = np.zeros((9, len(self.cell_list),2), dtype=np.int32)
+        cell_nl = np.zeros((9, len(self.cell_list), 2), dtype=np.int32)
         for i in range(int(self.cell_number[0])):
             for k in range(int(self.cell_number[1])):
                 shift = 0
@@ -165,7 +165,7 @@ class Neighbourlist:
         return cell_nl
 
     def cell_neighbour_list_3D(self):
-        cell_nl = np.zeros((27, len(self.cell_list),2), dtype=np.int32)
+        cell_nl = np.zeros((27, len(self.cell_list), 2), dtype=np.int32)
         for i in range(int(self.cell_number[0])):
             for k in range(int(self.cell_number[1])):
                 for p in range(int(self.cell_number[2])):
