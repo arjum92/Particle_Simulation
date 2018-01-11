@@ -2,10 +2,12 @@ import numpy as np
 from numba import jitclass
 from numba import float32, int8, int32, int16, int64
 
+
 cell_shift_list = np.array([
     [0, 1, -1, 1, -1, 1, -1, 0, 0, 0, 1, -1, 1, -1, 1, -1, 0, 0, 0, 1, -1, 1, -1, 1, -1, 0, 0],
     [0, 0, 0, 1, 1, -1, -1, 1, -1, 0, 0, 0, 1, 1, -1, -1, 1, -1, 0, 0, 0, 1, 1, -1, -1, 1, -1],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1]])
+
 
 specs = [
     ('particle_positions', float32[:, :]),
@@ -47,13 +49,19 @@ class Neighbourlist:
 
     def construct_neighbourlist(self):
 
+        # wipe neighborlists
+        self.cell_list = np.zeros(self.total_cell_number, dtype=np.int64) - 1
+        self.particle_neighbour_list = np.zeros(self.particle_number, dtype=np.int64) - 1
+        # create interim position array to operate on (so that particle_positions stays untouched)
+        shifted_particle_positions = self.particle_positions
+
         for i in range(self.particle_number):
 
             particle_cell_location = []
             for a in range(len(self.particle_positions[i])):
-                self.particle_positions[i][a] = self.periodic_box_shift(self.particle_positions[i][a],
+                shifted_particle_positions[i][a] = self.periodic_box_shift(self.particle_positions[i][a],
                                                                         self.box_space[a])
-                particle_cell_location.append(np.floor(self.particle_positions[i][a] / self.cell_space[a]))
+                particle_cell_location.append(np.floor(shifted_particle_positions[i][a] / self.cell_space[a]))
 
             cell_index = self.calculate_index(particle_cell_location)
             self.particle_neighbour_list[i] = self.cell_list[cell_index]
@@ -97,7 +105,7 @@ class Neighbourlist:
         return cell_nl
 
     def cell_neighbour_list_2D(self):
-        cell_nl = np.zeros((9, len(self.cell_list), 2), dtype=np.int32)
+        cell_nl = np.zeros((9, len(self.cell_list),2), dtype=np.int32)
         for i in range(int(self.cell_number[0])):
             for k in range(int(self.cell_number[1])):
                 shift = 0
@@ -157,7 +165,7 @@ class Neighbourlist:
         return cell_nl
 
     def cell_neighbour_list_3D(self):
-        cell_nl = np.zeros((27, len(self.cell_list), 2), dtype=np.int32)
+        cell_nl = np.zeros((27, len(self.cell_list),2), dtype=np.int32)
         for i in range(int(self.cell_number[0])):
             for k in range(int(self.cell_number[1])):
                 for p in range(int(self.cell_number[2])):
