@@ -1,5 +1,5 @@
-from System import System
-from MetropolisMonteCarlo import MetropolisMonteCarlo
+from Particle_Simulation.System import System
+from Particle_Simulation.MetropolisMonteCarlo import MetropolisMonteCarlo
 
 
 class Simulation:
