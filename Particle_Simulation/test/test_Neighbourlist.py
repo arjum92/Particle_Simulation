@@ -355,23 +355,22 @@ class test_System(unittest.TestCase):
         npt.assert_equal(reference_neighlist, s1.particle_neighbour_list, 'Failed', verbose=True)
 
 
-'''
+
     def test_benchmark(self):
         particle_positions = []
-        for i in range(0, 10000000):
+        for i in range(0, 100000):
             xtest = np.random.rand(3)
             particle_positions.append(xtest)
         particle_positions = np.array(particle_positions)
-        box_space = np.array([500, 500, 500])
+        box_space = np.array([50, 50, 50])
         cutoff = 2
         s1 = Neighbourlist(particle_positions, box_space, cutoff)
-        print(s1.calculate_index(np.array([1, 0, 0])))
-        lol = s1.cell_neighbour_list_3D()
-        s1.construct_neighborlist()
-        print(lol)
+        print("rdy")
+        for i in range(10):
+            s1.construct_neighbourlist()
         print(s1.cell_list)
         print(s1.particle_neighbour_list)
-'''
+
 
 '''
 Benchmark:
