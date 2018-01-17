@@ -21,7 +21,7 @@ class test_LennardJones(unittest.TestCase):
         particle_2 = Particle(position=np.array([2, 3.5, 6]), type_index=1)
         distance = LennardJones._calculate_distance(particle_1, particle_2)
         npt.assert_equal(reference_distance, distance, 'Failed', verbose=True)
-
+        
     def test_calculate_lennardjones_potential(self):
         reference_potential = -0.000042499
         print(reference_potential)
@@ -35,7 +35,6 @@ class test_LennardJones(unittest.TestCase):
         lg_value_rounded = lg_value.round(decimals=9)
         print(lg_value_rounded)
         npt.assert_equal(reference_potential, lg_value_rounded, 'Failed', verbose=True)
-
 
 if __name__ == '__main__':
     unittest.main()
