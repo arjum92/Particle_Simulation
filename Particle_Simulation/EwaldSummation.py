@@ -9,16 +9,17 @@ class EwaldSummation:
     def calculate_longranged_energy(system, parameters):
         position = system.neighbourlist.particle_positions
         particlenumber = len(position)
-        long_ranged_energy = 0
+        longrange_energy = 1
 
-        for k in system.k_vectors:
+        for k in parameters.k_vector:
             s_k = 0
+            kn = np.linalg.norm(k)
 
             for i in range(particlenumber):
                 particle_paramenter = parameters.particle_types[system.particles[i].type_index]
-                s_k += particle_paramenter.charge * np.e ** (1j * np.dot(k, position[i]))
-            long_ranged_energy += (s_k ** 2) * (np.e ** (((parameters.es_sigma ** 2) * (k ** 2)) / 2)) / (k ** 2)
-        long_ranged_energy *= 1 / (2 * (parameters.box ** 2) * EwaldSummation.VACUUM_PERMITTIVITY)
+                s_k += particle_paramenter.charge * np.cos(np.dot(k, position[i]))
+            longrange_energy += (s_k ** 2) * (np.e ** (((parameters.es_sigma ** 2) * (kn ** 2)) / 2)) / (kn ** 2)
+        longrange_energy *= (np.prod(parameters.box) * EwaldSummation.VACUUM_PERMITTIVITY)
 
         return long_ranged_energy
 
