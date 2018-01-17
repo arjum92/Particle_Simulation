@@ -3,12 +3,12 @@ from numba import jit
 from numba import jitclass
 from numba import float32, int8, int32, int16, int64
 
-from Particle import Particle
-from System import System
-from LennardJones import LennardJones
-from Parameters import Parameters
-from EwaldSummation import EwaldSummation
-from Energy import Energy
+from Particle_Simulation.Particle import Particle
+from Particle_Simulation.System import System
+from Particle_Simulation.LennardJones import LennardJones
+from Particle_Simulation.Parameters import Parameters
+from Particle_Simulation.EwaldSummation import EwaldSummation
+from Particle_Simulation.Energy import Energy
 
 
 class EnergyCalculator:
