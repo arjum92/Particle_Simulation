@@ -17,5 +17,5 @@ class test_EwaldSummation(unittest.TestCase):
         particle_2 = Particle(position=np.array([2, 3.5, 6]), type_index=0)
         particles = np.array([particle_1, particle_2])
         system = System(particles, parameters)
-        E = EwaldSummation._calculate_longranged_energy(self, system=system, parameters=parameters)
+        E = EwaldSummation.calculate_longranged_energy(system=system, parameters=parameters)
         print(E)

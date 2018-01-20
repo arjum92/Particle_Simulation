@@ -21,7 +21,7 @@ class EwaldSummation:
             longrange_energy += (s_k ** 2) * (np.e ** (((parameters.es_sigma ** 2) * (kn ** 2)) / 2)) / (kn ** 2)
         longrange_energy *= (np.prod(parameters.box) * EwaldSummation.VACUUM_PERMITTIVITY)
 
-        return long_ranged_energy
+        return longrange_energy
 
     @staticmethod
     def calculate_selfinteraction_potential(particle, parameters):
